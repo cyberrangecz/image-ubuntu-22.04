@@ -1,0 +1,17 @@
+include:
+  - project: muni-kypo-images/ci-cd-virtual-images
+    file: .gitlab-ci-template.yml
+
+variables:
+  NAME: "ubuntu"
+  TYPE: "linux"
+  DISTRO: "ubuntu"
+  GUI_ACCESS: "false"
+
+test-vbox:
+  stage: test
+  script:
+    - vagrant box add --name mybox target-vbox/package.box
+    - vagrant up
+  resource_group: virtual-machine
+  needs: ["build-vbox"]
