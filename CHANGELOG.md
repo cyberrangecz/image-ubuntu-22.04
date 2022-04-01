@@ -1,5 +1,9 @@
 # Changelog
 
+## [vbox-0.3.0] - 2022-04-01
+### Added
+- Ansible
+
 ## [qemu-0.3.0], [vbox-0.2.0] - 2022-03-31
 ### Added
 - Git client, CA certificates
@@ -19,3 +23,4 @@
 [qemu-0.2.0]: https://gitlab.ics.muni.cz/muni-kypo-images/ubuntu-18.04/-/tree/qemu-0.2.0
 [vbox-0.2.0]: https://gitlab.ics.muni.cz/muni-kypo-images/ubuntu-18.04/-/tree/vbox-0.2.0
 [qemu-0.3.0]: https://gitlab.ics.muni.cz/muni-kypo-images/ubuntu-18.04/-/tree/qemu-0.3.0
+[vbox-0.3.0]: https://gitlab.ics.muni.cz/muni-kypo-images/ubuntu-18.04/-/tree/vbox-0.3.0
