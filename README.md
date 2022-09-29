@@ -2,6 +2,8 @@
 
 **NOTE: this is just a copy of Ubuntu 18.04 repo, which is unfinished**
 
+**TODO: update boot command in ubuntu.json for 22.04**
+
 This repo contains Packer files for building Ubuntu 22.04.1 LTS Jammy Jellyfish amd64 base image for QEMU/OpenStack and for VirtualBox/Vagrant using Gitlab CI/CD.
 
 ## Image for QEMU/OpenStack
