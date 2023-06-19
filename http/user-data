@@ -2,6 +2,12 @@
 autoinstall:
   # comment on line 1 needs to be there, or autoinstall file will not be used
   version: 1
+  network:
+      network:
+          version: 2
+          ethernets:
+              ens3:
+                 dhcp4: yes
   early-commands:
     # We need to disable ssh during the autoinstall phase, or Packer will try to connect.
     # After autoinstall, the VM will reboot, ssh will start up, and then Packer can continue.
