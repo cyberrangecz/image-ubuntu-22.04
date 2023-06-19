@@ -29,13 +29,3 @@ See [issues](https://gitlab.ics.muni.cz/muni-kypo-images/ubuntu-22.04/-/issues).
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
-
-## Acknowledgements
-
-<table>
-  <tr>
-    <td>![EU](figures/EU.jpg "EU emblem")</td>
-    <td>
-This software and accompanying documentation is part of a [project](https://cybersec4europe.eu) that has received funding from the European Union’s Horizon 2020 research and innovation programme under grant agreement No. 830929.
-</td>
- </table>
