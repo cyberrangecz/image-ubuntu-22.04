@@ -7,16 +7,11 @@ variables:
   TYPE: "linux"
   DISTRO: "ubuntu"
 
-test-qemu:
-  stage: test
-  script:   # Changes made to this script need to be manually reflected in the windows template
-    # Generate keys and provide them via a disk to cloud-init
-    - ssh-keygen -f ./id_rsa -N "" -C mykey
-    - mkdir -p drive/openstack/latest
-    - echo "{\"uuid\":\"d8e02d56-2648-49a3-bf97-6be8f1204f38\", \"public_keys\":{\"mykey\":\"`cat id_rsa.pub`\"}}" > drive/openstack/latest/meta_data.json
-    - mkisofs -R -J -V config-2 -o config.img drive/
-    # Run the VM, run Ansible
-    - qemu-system-x86_64 -accel kvm -m size=4096 --smp 4 -device nec-usb-xhci,id=usb,bus=pci.0,addr=0x4 -device usb-tablet -net nic -net user,hostfwd=tcp::2222-:22 -cdrom config.img target-qemu/* &
-    - echo "ssh ansible_user=vagrant ansible_port=2222 ansible_host=127.0.0.1 ansible_connection=ssh ansible_ssh_pass=vagrant" > inventory
-    - ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook --private-key id_rsa -i inventory --ssh-extra-args "-o UserKnownHostsFile=/dev/null -o IdentitiesOnly=yes -o ControlMaster=auto -o ControlPersist=60s" --timeout=30 -v playbook.yml
-  resource_group: virtual-machine
+build-vbox:
+  extends: .build
+  script:
+    - PACKER_LOG=1 packer build -only=vbox $NAME.json
+  artifacts:
+    paths:
+      - target-vbox/*
+
