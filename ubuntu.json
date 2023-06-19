@@ -65,12 +65,6 @@
           "{{.Name}}",
           "--cpus",
           "4"
-        ],
-        [
-          "modifyvm",
-          "{{.Name}}",
-          "--nat-localhostreachable1",
-          "on"
         ]
       ]
     },
@@ -81,7 +75,6 @@
       "boot_command" : [
         "<wait>c<wait>set gfxpayload=keep<enter><wait>linux /casper/vmlinuz quiet autoinstall ds=nocloud-net\\;s=http://{{.HTTPIP}}:{{.HTTPPort}}/ ---<enter><wait>initrd /casper/initrd<wait><enter><wait>boot<enter>"
       ],
-      "accelerator": "hvf",
       "boot_wait": "{{user `boot_wait`}}",
       "boot_key_interval": "100ms",
       "disk_interface": "virtio-scsi",
