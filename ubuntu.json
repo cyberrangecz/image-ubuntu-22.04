@@ -9,17 +9,26 @@
     "http_port_min": "10082",
     "iso_checksum": "5e38b55d57d94ff029719342357325ed3bda38fa80054f9330dc789cd2d43931",
     "iso_url": "https://www.releases.ubuntu.com/jammy/ubuntu-22.04.2-live-server-amd64.iso",
-    "memory_size": "2048", 
-    "shutdown_command": "shutdown -P now",
-    "ssh_password": "vagrant",
+    "memory_size": "4096", 
+    "shutdown_command": "sudo systemctl poweroff",
+    "ssh_password": "ubuntu",
     "ssh_port": "22",
-    "ssh_username": "vagrant",
+    "ssh_username": "ubuntu",
     "ssh_wait_timeout": "90m",
-    "vm_name": "xubuntu",
+    "vm_name": "ubuntu",
     "vnc_vrdp_bind_address": "127.0.0.1",
     "vnc_vrdp_port": "5900"
   },
   "builders": [
+    {
+      "type": "vagrant",
+      "name": "vagrant",
+      "communicator": "ssh",
+      "source_path": "https://cloud-images.ubuntu.com/jammy/current/jammy-server-cloudimg-amd64-vagrant.box",
+      "checksum": "file:https://cloud-images.ubuntu.com/jammy/current/SHA256SUMS",
+      "provider": "virtualbox",
+      "add_force": true
+    },
     {
       "type": "virtualbox-iso",
       "name": "vbox",
@@ -67,13 +76,21 @@
           "4"
         ]
       ]
-    },
+    },    
     {
       "type": "qemu",
       "name": "qemu",
       "use_default_display": "true",
-      "boot_command" : [
-        "<wait>c<wait>set gfxpayload=keep<enter><wait>linux /casper/vmlinuz quiet autoinstall ds=nocloud-net\\;s=http://{{.HTTPIP}}:{{.HTTPPort}}/ ---<enter><wait>initrd /casper/initrd<wait><enter><wait>boot<enter>"
+      "boot_command": [
+        "<esc><esc><esc>",
+        "c<wait>",
+        "set gfxpayload=keep<enter><wait>",
+        "linux /casper/vmlinuz <wait>",
+        "autoinstall <wait>",
+        "ds=\"nocloud-net;s=http://{{.HTTPIP}}:{{.HTTPPort}}/\" <wait>",
+        "---<enter><wait>",
+        "initrd /casper/initrd<enter><wait>",
+        "boot<enter><wait>"
       ],
       "boot_wait": "{{user `boot_wait`}}",
       "boot_key_interval": "100ms",
@@ -84,7 +101,7 @@
       "http_directory": "{{user `http_directory`}}",
       "http_port_max": "{{user `http_port_max`}}",
       "http_port_min": "{{user `http_port_min`}}",
-      "iso_checksum": "sha256:{{user `iso_checksum`}}",
+      "iso_checksum": "{{user `iso_checksum`}}",
       "iso_url": "{{user `iso_url`}}",
       "net_device": "virtio-net",
       "output_directory": "target-qemu",
@@ -97,11 +114,11 @@
           "-smp",
           "cpus={{ user `cpus` }},maxcpus=16,cores=4"
         ]
-      ],  
-      "shutdown_command": "sudo systemctl poweroff",
-      "ssh_password": "vagrant",
+      ],
+      "shutdown_command": "{{user `shutdown_command`}}",
+      "ssh_password": "{{user `ssh_password`}}",
       "ssh_port": "{{user `ssh_port`}}",
-      "ssh_username": "vagrant",
+      "ssh_username": "{{user `ssh_username`}}",
       "ssh_wait_timeout": "{{user `ssh_wait_timeout`}}",
       "vm_name": "{{user `vm_name`}}",
       "vnc_port_min": "{{user `vnc_vrdp_port`}}",
@@ -122,7 +139,8 @@
     {
       "type": "shell",
       "inline": [
-        "touch ~/hello-world"
+        "touch ~/hello-world",
+        "sed -i 's/ens3/ens4/' /etc/netplan/00-installer-config.yaml"
       ],
       "only": [
         "qemu"
