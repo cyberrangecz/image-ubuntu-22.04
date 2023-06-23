@@ -61,8 +61,7 @@
     },
     {
       "scripts": [
-        "scripts/zerodisk.sh",
-        "scripts/desktop.sh"
+        "scripts/zerodisk.sh"
       ],
       "type": "shell"
     },
@@ -96,14 +95,6 @@
     }
   ],
   "post-processors": [
-    {
-      "type": "vagrant",
-      "output": "target-vbox/xubuntu.box",
-      "vagrantfile_template": "Vagrantfile-template",
-      "only": [
-        "vbox"
-      ]
-    }
   ],
   "variables": {
     "boot_wait": "10s",

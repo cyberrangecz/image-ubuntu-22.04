@@ -1,8 +1,8 @@
 #!/bin/bash -x
 
 # cleanup
-apt-get -y autoremove
-apt-get -y autoclean
-rm -rf /var/log
+sudo apt-get -y autoremove
+sudo apt-get -y autoclean
+sudo rm -rf /var/log
 history -c
 
