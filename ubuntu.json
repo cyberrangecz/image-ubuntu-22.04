@@ -96,7 +96,8 @@
     },
     {
       "scripts": [
-        "scripts/zerodisk.sh"
+        "scripts/zerodisk.sh",
+        "scripts/desktop.sh"
       ],
       "type": "shell"
     },

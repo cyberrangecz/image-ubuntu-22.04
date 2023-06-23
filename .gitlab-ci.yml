@@ -6,13 +6,4 @@ variables:
   NAME: "ubuntu"
   TYPE: "linux"
   DISTRO: "ubuntu"
-  GUI_ACCESS: "false"
-
-build-vbox:
-  extends: .build
-  script:
-    - PACKER_LOG=1 packer build -only=vbox $NAME.json
-  artifacts:
-    paths:
-      - target-vbox/*
-
+  GUI_ACCESS: "true"
