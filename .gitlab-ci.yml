@@ -6,6 +6,7 @@ variables:
   NAME: "ubuntu"
   TYPE: "linux"
   DISTRO: "ubuntu"
+  GUI_ACCESS: "false"
 
 build-vbox:
   extends: .build

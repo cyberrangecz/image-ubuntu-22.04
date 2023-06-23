@@ -14,3 +14,6 @@ systemctl enable cloud-init
 systemctl enable cloud-init-local.service
 systemctl enable cloud-final.service
 systemctl enable cloud-config.service
+
+# with new ubuntu autoinstall installer cloud-init is run as part of the installation process, so we need to reset it
+sudo cloud-init clean

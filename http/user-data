@@ -1,105 +1,20 @@
 #cloud-config
 autoinstall:
-  # comment on line 1 needs to be there, or autoinstall file will not be used
-  version: 1
-  # network:
-  #     network:
-  #         version: 2
-  #         ethernets:
-  #             ens4:
-  #                dhcp4: yes
   storage:
     layout:
       name: direct
-    swap:
-      size: 0
   early-commands:
-    # We need to disable ssh during the autoinstall phase, or Packer will try to connect.
-    # After autoinstall, the VM will reboot, ssh will start up, and then Packer can continue.
-    - "systemctl stop sshd"
-  apt:
-    geoip: true
-    preserve_sources_list: false
-    primary:
-    - arches: "[amd64, i386]"
-      uri: "mirror://mirrors.ubuntu.com/mirrors.txt"
-    - arches: "[default]"
-      uri: "http://ports.ubuntu.com/ubuntu-ports"
-  identity:
-    hostname: "ubuntu2204"
-    username: "ubuntu"
-    # This password is "vagrant", use the command `openssl passwd -6` to generate a new hash if needed.
-    # This needs to match the "ssh_password" field in packer.json
-    password: "$6$CG/3wG6U6vagDFjC$WjSNjZaL/CqK/8SwMO0ARqvY614BG2LceS9ZEGr6K9PQhIDnNmlZVEG6z2LmoDYK0XYtP7emnR5Pte4j7DUoA0"
+    # otherwise packer tries to connect and exceed max attempts:
+    - systemctl stop ssh.service
+    - systemctl stop ssh.socket
   ssh:
-    allow-pw: true
-    install-server: true
-  locale: "en_US"
-  keyboard:
-    layout: "us"
-  packages:
-    - "openssh-server"
-    - "cryptsetup"
-    - "python3-pip"
-    - "cloud-init"
-    - "apt-transport-https"
-    - "ca-certificates"
-    - "curl"
-    - "gnupg"
-    - "qemu-guest-agent"
-    ###
-    # - "bind9-utils"
-    # - "net-tools"
-    # - "build-essential"
-    # - "libssl-dev"
-    # - "libreadline-dev"
-    # - "zlib1g-dev"
-    # - "linux-source"
-    # - "dkms"
-    # - "nfs-common"
-    # - "lsb-release"
-    # - "vim-nox"
-    # - "socat"
-    # - "lvm2"
-    # - "telnet"
-    # - "tcpdump"
-    # - "linux-libc-dev"
-    # - "gcc"
-    # - "cpp"
-    # - "libmpc3"
-    # - "libmpfr6"
-    # - "zlib1g-dev"
-    # - "bzip2"
-    # - "bash-completion"
-    # - "conntrack"
+    install-server: yes
+    allow-pw: yes
+  user-data:
+    users:
+      - name: root
+        plain_text_passwd: toor
+        lock_passwd: false
   late-commands:
-    # - "curtin in-target --target=/target -- rm -rf /var/lib/apt/lists"
-    # - "curtin in-target --target=/target -- apt-get update"
-    # - "curtin in-target --target=/target -- apt-get -y dist-upgrade"
-    # - "curtin in-target --target=/target -- apt-get -y autoremove"
-    # - "curtin in-target --target=/target -- apt-get autoclean"
-    # - "curtin in-target --target=/target -- apt-get clean"
-    # - "curtin in-target --target=/target -- rm -rf /var/lib/apt/lists/*"
-    # - "rm -rf /var/lib/apt/lists/*"
-    ##
-    - 'sed -i "s/dhcp4: true/&\n      dhcp-identifier: mac/" /target/etc/netplan/00-installer-config.yaml'
-    ##
-    # - "echo 'Defaults:vagrant !requiretty' > /target/etc/sudoers.d/vagrant"
-    # - "echo 'vagrant ALL=(ALL) NOPASSWD: ALL' >> /target/etc/sudoers.d/vagrant"
-    # - "chmod 440 /target/etc/sudoers.d/vagrant"
-    ## source: https://stackoverflow.com/questions/61591885/how-do-i-set-a-custom-password-with-cloud-init-on-ubuntu-20-04
-    - "useradd -m -R /target -u 1001 ubuntu"
-    - "echo "ubuntu:ubuntu" | chroot /target /usr/sbin/chpasswd"
-    - "usermod -R /target -aG sudo ubuntu"
-  #  - |
-  #     rm /target/etc/netplan/00-installer-config.yaml
-  #     cat <<EOF > /target/etc/netplan/80-my.yaml
-  #     network:
-  #       ethernets:
-  #         ens4:
-  #           match:
-  #             driver: *
-  #           dhcp4: true
-  #           set-name: eth0
-  #       version: 2
-  #     EOF
+    - sed -i 's/#PermitRootLogin.*/PermitRootLogin yes/g' /target/etc/ssh/sshd_config
+  version: 1
