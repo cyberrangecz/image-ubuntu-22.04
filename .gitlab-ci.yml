@@ -6,4 +6,4 @@ variables:
   NAME: "ubuntu"
   TYPE: "linux"
   DISTRO: "ubuntu"
-  GUI_ACCESS: "true"
+  GUI_ACCESS: "false"
