@@ -1,9 +1,11 @@
 {
   "builders": [
     {
+      "type": "qemu",
+      "name": "qemu",
       "use_default_display": "true",
       "boot_command": [
-        "<wait>c<wait>set gfxpayload=keep<enter><wait>linux /casper/vmlinuz quiet autoinstall ds=nocloud-net\\;s=http://{{.HTTPIP}}:{{.HTTPPort}}/ ---<enter><wait>initrd /casper/initrd<wait><enter><wait>boot<enter>"
+        "<wait>c<wait>set gfxpayload=keep<enter><wait>linux /casper/vmlinuz quiet autoinstall ds=nocloud-net\\;s=http://{{.HTTPIP}}:{{.HTTPPort}}/ ---<enter><wait>initrd /casper/initrd<wait><enter><wait>boot<enter><wait>"
       ],
       "boot_wait": "{{user `boot_wait`}}",
       "boot_key_interval": "10ms",
@@ -16,7 +18,6 @@
       "http_port_min": "{{user `http_port_min`}}",
       "iso_checksum": "{{user `iso_checksum`}}",
       "iso_url": "{{user `iso_url`}}",
-      "name": "qemu",
       "net_device": "virtio-net",
       "output_directory": "target-qemu",
       "qemuargs": [
@@ -34,7 +35,6 @@
       "ssh_port": "{{user `ssh_port`}}",
       "ssh_username": "{{user `ssh_username`}}",
       "ssh_wait_timeout": "{{user `ssh_wait_timeout`}}",
-      "type": "qemu",
       "vm_name": "{{user `vm_name`}}",
       "vnc_port_min": "{{user `vnc_vrdp_port`}}",
       "vnc_port_max": "{{user `vnc_vrdp_port`}}",
@@ -94,7 +94,7 @@
   "post-processors": [
   ],
   "variables": {
-    "boot_wait": "10s",
+    "boot_wait": "20s",
     "cpus": "4",
     "disk_size": "16384",
     "headless": "true",
