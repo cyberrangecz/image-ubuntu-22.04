@@ -1,6 +1,7 @@
 - name: Hello world
   hosts: image-test
   gather_facts: no
+  become: yes
   tasks:
     - name: Wait for connection
       wait_for_connection:
