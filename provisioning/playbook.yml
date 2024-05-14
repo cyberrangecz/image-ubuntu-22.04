@@ -16,3 +16,12 @@
       debug:
         msg: "Hello World"
 
+    - name: Test adding apt key
+      apt_key:
+        url: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+        id: D88E42B4
+
+    - name: Test adding apt repository
+      apt_repository:
+        repo: deb https://artifacts.elastic.co/packages/8.x/apt stable main
+        filename: elasticsearch-8.x
