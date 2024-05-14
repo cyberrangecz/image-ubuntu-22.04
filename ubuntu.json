@@ -109,7 +109,7 @@
     "ssh_port": "22",
     "ssh_username": "root",
     "ssh_wait_timeout": "90m",
-    "vm_name": "xubuntu",
+    "vm_name": "ubuntu",
     "vnc_vrdp_bind_address": "127.0.0.1",
     "vnc_vrdp_port": "5900"
   }
