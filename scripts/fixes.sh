@@ -15,6 +15,10 @@ sudo systemctl disable apt-daily.timer;
 sudo systemctl disable apt-daily-upgrade.timer;
 sudo systemctl daemon-reload;
 
+# fix apt "Method https has died unexpectedly!" 
+#https://askubuntu.com/questions/1420966/method-https-has-died-unexpectedly-sub-process-https-received-signal-4-after
+echo "GNUTLS_CPUID_OVERRIDE=0x1" >> /etc/environment
+
 # cleanup
 sudo apt-get -y autoremove
 sudo apt-get -y autoclean
