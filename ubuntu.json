@@ -96,7 +96,7 @@
   "variables": {
     "boot_wait": "10s",
     "cpus": "4",
-    "disk_size": "16384",
+    "disk_size": "8192",
     "headless": "true",
     "http_directory": "http",
     "http_port_max": "10089",
