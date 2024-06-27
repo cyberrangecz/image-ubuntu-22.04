@@ -1,7 +1,6 @@
 #cloud-config
 ssh_pwauth: true
 users:
-  - default
   - name: ubuntu
     plain_text_passwd: ubuntu
     lock_passwd: false

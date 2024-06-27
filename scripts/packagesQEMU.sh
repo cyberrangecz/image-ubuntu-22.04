@@ -1,7 +1,6 @@
 #!/bin/sh -x
 
 # install cloud support
-
 echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
 DEBIAN_FRONTEND=noninteractive sudo apt-get update
 DEBIAN_FRONTEND=noninteractive sudo apt-get install -y cloud-init qemu-guest-agent cloud-guest-utils cloud-initramfs-growroot spice-vdagent
